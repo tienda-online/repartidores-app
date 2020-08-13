@@ -6,8 +6,9 @@ import '../size_config.dart';
 class FormInput extends StatelessWidget{
   final TextEditingController controller ;
   final String hintText;
+  final bool isContrasena;
 
-  const FormInput({Key key, this.controller, this.hintText}) : super(key: key);
+  const FormInput({Key key, this.controller, this.hintText,this.isContrasena}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -17,6 +18,7 @@ class FormInput extends StatelessWidget{
         height: getProportionateScreenHeight(40),
         child: TextFormField(
           controller: controller,
+          obscureText: isContrasena,
           decoration: InputDecoration(
             contentPadding: EdgeInsets.only(left: 20),
             hintText: hintText,

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:shop_app/screens/login/login.dart';
+import 'package:izi_repartidores/screens/login/login.dart';
 
 class LogIn extends Equatable {
   final String usuario;

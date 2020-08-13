@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_app/components/input_text.dart';
-import 'package:shop_app/components/showMessage.dart';
-import 'package:shop_app/constants.dart';
-import 'package:shop_app/screens/login/bloc/login_bloc.dart';
-import 'package:shop_app/screens/login/bloc/login_state.dart';
-import 'package:shop_app/screens/login/components/logInForm.dart';
-import 'package:shop_app/screens/login/components/textoBienvenida.dart';
-import 'package:shop_app/size_config.dart';
+import 'package:izi_repartidores/components/inicio.dart';
+import 'package:izi_repartidores/components/input_text.dart';
+import 'package:izi_repartidores/components/loading.dart';
+import 'package:izi_repartidores/components/showMessage.dart';
+import 'package:izi_repartidores/constants.dart';
+import 'package:izi_repartidores/screens/login/bloc/login_bloc.dart';
+import 'package:izi_repartidores/screens/login/bloc/login_event.dart';
+import 'package:izi_repartidores/screens/login/bloc/login_state.dart';
+import 'package:izi_repartidores/screens/login/components/logInForm.dart';
+import 'package:izi_repartidores/screens/login/components/textoBienvenida.dart';
+import 'package:izi_repartidores/screens/perfil/perfil.dart';
+import 'package:izi_repartidores/size_config.dart';
 
 class Login extends StatefulWidget {
  Login({Key key}) : super(key: key);
@@ -25,7 +30,21 @@ class  LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
      SizeConfig().init(context);
-    return Scaffold(
+    return BlocProvider<LogInBloc>(
+      bloc: logInBLOC,
+      child: buildScaffoldLogin());
+  }
+
+  Widget buildScaffoldLogin() {
+    return  BlocListener(
+      bloc: logInBLOC,
+      listener: (context, state) {
+        if (state is LogInLoaded) {
+          MaterialPageRoute route=MaterialPageRoute(builder: (context)=>Home(repartidor:state.login));
+          Navigator.of(context).push(route);
+        }
+      },
+          child: Scaffold(
       resizeToAvoidBottomPadding: false,
         appBar: AppBar(title: 
         Text("Inicio de Sesion",
@@ -40,42 +59,34 @@ class  LoginState extends State<Login> {
               borderRadius: BorderRadius.only(topLeft:Radius.circular(30),topRight: Radius.circular(30)),
               color: Colors.white
             ), 
-            child: BlocProvider(
-                bloc: logInBLOC,
-                child: BlocBuilder(bloc: logInBLOC,
+            child: BlocBuilder(bloc: logInBLOC,
                 builder: (BuildContext context,LogInState state) {
                   if (state is LoginInitial){
-                    return buildLogInForm();
+                    return buildLogInForm("");
                   }else if (state is LoginLoading){
-                    return buildLoading();
-                  } else if (state is LogInLoaded){
-                    return Center(child:Text("Logeado Correctamente"));
-                  }else{
-                    return buildLogInForm();
+                    return Loading();
+                  }else if (state is LoginFailed){
+                    return buildLogInForm(state.error);
                   }
+                  return buildLogInForm("");
                 },           
               ),
-            )
               
             ), 
-    );
-  }
-
-   Widget buildLoading() {
-    return Center(
-      child: CircularProgressIndicator(),
+  ),
     );
   }
 
 
-  Column buildLogInForm() {
-    
+
+  Column buildLogInForm(String error) {
+
     return Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               TextoBienvenida(),
-              LogInForm()
+              LogInForm(error,)
             ],
           );
   }

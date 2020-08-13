@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/constants.dart';
-import 'package:shop_app/screens/login/login.dart';
+import 'package:izi_repartidores/constants.dart';
+import 'package:izi_repartidores/screens/login/login.dart';
 
 void main() {
   runApp(MyApp());

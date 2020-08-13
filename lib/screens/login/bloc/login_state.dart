@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:shop_app/model/logInAnswer.dart';
-import 'package:shop_app/model/login.dart';
+import 'package:izi_repartidores/model/logInAnswer.dart';
+import 'package:izi_repartidores/model/login.dart';
 
 
 abstract class LogInState extends Equatable {
@@ -10,11 +10,16 @@ abstract class LogInState extends Equatable {
 class LoginInitial extends LogInState {}
 
 class LoginLoading extends LogInState {}
-class LoginFailed extends LogInState {}
+
+class LoginFailed extends LogInState {
+  final String error;
+  LoginFailed(this.error):super([error]);
+
+}
 
 // Only the LogInLoaded event needs to contain data
 class LogInLoaded extends LogInState {
-  final LogInAnswer login;
+  final dynamic login;
 
   LogInLoaded(this.login) : super([login]);
 }

@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:shop_app/model/repartidor.dart';
+import 'package:izi_repartidores/model/repartidor.dart';
 
 part 'logInAnswer.g.dart';
 
