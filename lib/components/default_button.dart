@@ -15,17 +15,17 @@ class DefaultButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
-      height: getProportionateScreenHeight(56),
+      width: getProportionateScreenWidth(250),
+      height: getProportionateScreenHeight(45),
       child: FlatButton(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        color: kPrimaryColor,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),side: BorderSide(color: kPrimaryColor,width: 2.5 )),
+        color: Colors.white,
         onPressed: press,
         child: Text(
           text,
           style: TextStyle(
             fontSize: getProportionateScreenWidth(18),
-            color: Colors.white,
+            color: kPrimaryColor,
           ),
         ),
       ),
