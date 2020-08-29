@@ -3,6 +3,10 @@ import 'package:izi_repartidores/components/circular_image.dart';
 import 'package:izi_repartidores/constants.dart';
 import 'package:izi_repartidores/model/repartidor.dart';
 import 'package:izi_repartidores/size_config.dart';
+import 'package:izi_repartidores/size_config.dart';
+import 'package:izi_repartidores/constants.dart';
+import 'package:izi_repartidores/constants.dart';
+import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class Perfil extends StatefulWidget {
   Repartidor repartidor;
@@ -30,10 +34,13 @@ class _PerfilState extends State<Perfil> {
                       TextSpan(text: "Bienvenido ",style: TextStyle(color: Colors.black)),
                       TextSpan(text:"${widget.repartidor.nombre} ${widget.repartidor.apellido}",style: TextStyle(color: kPrimaryColor))
                     ]
-                  )),
+                  )
                 ),
               ),
-              CircularImage(height: getProportionateScreenHeight(130),url: widget.repartidor.imagen,),
+            ),
+            CircularImage(height: getProportionateScreenHeight(130),url: widget.repartidor.imagen,),
+            SizedBox(height: getProportionateScreenHeight(30),),
+            starsRating(4),
             buildInfo()
             ],
         );
@@ -51,3 +58,24 @@ class _PerfilState extends State<Perfil> {
   }
 }
 
+Widget starsRating(double rating){
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      SmoothStarRating(
+              starCount: 5,
+              rating: rating,
+              size: 20.0,
+              isReadOnly:true,
+              color: kPrimaryColor,
+              defaultIconData: Icons.star_border,
+              filledIconData: Icons.star,
+              halfFilledIconData: Icons.star_half_outlined,
+              borderColor: kPrimaryColor,
+              spacing:0.0
+        ),
+        Text("(${rating})",style: TextStyle(color: Colors.grey[500]),)
+    ],
+    
+  );
+}

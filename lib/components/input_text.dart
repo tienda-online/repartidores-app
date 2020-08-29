@@ -7,8 +7,9 @@ class FormInput extends StatelessWidget{
   final TextEditingController controller ;
   final String hintText;
   final bool isContrasena;
+  final Function onSubmit;
 
-  const FormInput({Key key, this.controller, this.hintText,this.isContrasena}) : super(key: key);
+  const FormInput({Key key, this.controller, this.hintText,this.isContrasena,this.onSubmit}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -17,6 +18,7 @@ class FormInput extends StatelessWidget{
         width: getProportionateScreenWidth(300),
         height: getProportionateScreenHeight(40),
         child: TextFormField(
+          onFieldSubmitted: onSubmit,
           controller: controller,
           obscureText: isContrasena,
           decoration: InputDecoration(

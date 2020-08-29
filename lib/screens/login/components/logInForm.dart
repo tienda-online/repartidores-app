@@ -21,8 +21,8 @@ class _LogInFormState extends State<LogInForm> {
    TextEditingController contrasenaController;
    @override
   void initState() {
-    usuarioController=new TextEditingController();
-    contrasenaController=new TextEditingController();
+    usuarioController=new TextEditingController(text: "drmendozal98@gmail.com");
+    contrasenaController=new TextEditingController(text: "admin");
     super.initState();
   }
 
@@ -30,7 +30,10 @@ class _LogInFormState extends State<LogInForm> {
   Widget build(BuildContext context) {
     return Form(child: Column(children: [
       FormInput(controller: usuarioController,hintText: "Correo Electronico",isContrasena: false,),
-      FormInput(controller:contrasenaController, hintText: "Contrasena",isContrasena: true,),
+      FormInput(controller:contrasenaController, hintText: "Contrasena",isContrasena: true,onSubmit: (string){
+        final logInBloc=BlocProvider.of<LogInBloc>(context);
+        logInBloc.dispatch(GetlogIn(usuarioController.text,contrasenaController.text,context));
+      },),
       olvidasteContrasena(),
       SizedBox(height: getProportionateScreenHeight(35),),
       Text(widget.error,style:TextStyle(color:Colors.red,fontSize: getProportionateScreenHeight(15),fontWeight: FontWeight.bold)),

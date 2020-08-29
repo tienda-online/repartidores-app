@@ -16,7 +16,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int page=0;
-  List<String> titulos=["Perfil","Pedidos Realizados","Pedido Actual"];
+  List<String> titulos=["Perfil","Ordenes","Orden Actual"];
   @override
   Widget build(BuildContext context) {
      List<Widget> screens=[Perfil(repartidor:widget.repartidor),PedidosPage(),PedidoActualPage()];
@@ -25,7 +25,7 @@ class _HomeState extends State<Home> {
       appBar: buildAppBar(),
       body: Container(
         width:SizeConfig.screenWidth,
-        height: SizeConfig.screenHeight*0.82,
+        height: SizeConfig.screenHeight,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(topLeft:Radius.circular(30),topRight: Radius.circular(30)),
           color: Colors.white
