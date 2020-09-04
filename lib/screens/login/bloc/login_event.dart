@@ -1,6 +1,6 @@
 
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 abstract class LogInEvent extends Equatable{
   LogInEvent([List props = const []]) : super(props);
@@ -18,7 +18,3 @@ class GetlogIn extends LogInEvent {
   
 }
 
-class LogInFallo extends LogInEvent{
-  final String error;
-  LogInFallo(this.error):super([error]);
-}

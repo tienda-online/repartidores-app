@@ -10,6 +10,7 @@ import 'package:izi_repartidores/screens/login/bloc/login_bloc.dart';
 import 'package:izi_repartidores/screens/login/bloc/login_event.dart';
 import 'package:izi_repartidores/screens/login/bloc/login_state.dart';
 import 'package:izi_repartidores/screens/login/components/logInForm.dart';
+import 'package:izi_repartidores/screens/login/components/logo.dart';
 import 'package:izi_repartidores/screens/login/components/textoBienvenida.dart';
 import 'package:izi_repartidores/screens/perfil/perfil.dart';
 import 'package:izi_repartidores/size_config.dart';
@@ -41,11 +42,12 @@ class  LoginState extends State<Login> {
       listener: (context, state) {
         if (state is LogInLoaded) {
           MaterialPageRoute route=MaterialPageRoute(builder: (context)=>Home(repartidor:state.login));
-          Navigator.of(context).push(route);
+          Navigator.of(context).pushReplacement(route);
         }
       },
           child: Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomPadding: true,
+      resizeToAvoidBottomInset: true,
         appBar: AppBar(title: 
         Text("Inicio de Sesion",
           style: TextStyle(color: Colors.white,fontSize: getProportionateScreenHeight(20)),),
@@ -79,14 +81,20 @@ class  LoginState extends State<Login> {
 
 
 
-  Column buildLogInForm(String error) {
+  Widget buildLogInForm(String error) {
 
-    return Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
+    return ListView(
             children: [
+              Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+              SizedBox(height: getProportionateScreenHeight(30),),
+              LogoLogin(),
               TextoBienvenida(),
               LogInForm(error,)
+              ],)
+              
             ],
           );
   }

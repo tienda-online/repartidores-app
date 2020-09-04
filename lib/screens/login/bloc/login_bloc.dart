@@ -11,6 +11,7 @@ import 'package:izi_repartidores/model/repartidor.dart';
 import 'package:izi_repartidores/screens/login/bloc/login_event.dart';
 import 'package:izi_repartidores/screens/login/bloc/login_state.dart';
 import 'package:http/http.dart';
+import 'package:izi_repartidores/services/request.services.dart';
 
 class LogInBloc extends Bloc<LogInEvent, LogInState> {
   @override
@@ -26,7 +27,7 @@ class LogInBloc extends Bloc<LogInEvent, LogInState> {
     if (event is GetlogIn) {
       // Outputting a state from the asynchronous generator
       yield LoginLoading();
-      final login = await _fetchLogin(event.usuario,event.contrasena,event.context);
+      final login = await RequestService.fetchLogin(event.usuario,event.contrasena);
       if (login is String){
         yield LoginFailed(login);
       }else{
@@ -35,24 +36,7 @@ class LogInBloc extends Bloc<LogInEvent, LogInState> {
       
     }
 
-    if (event is LogInFallo){
-      yield LoginInitial();
-    }
-
   }
 
-  Future<dynamic> _fetchLogin(String usuario,String contrasena,BuildContext context) async {
-    try{
-    String jsonBody = '{"correo": "${usuario}", "contrasena": "${contrasena}"}';
-    Response response = await put(kapiUrl+"/login", body: jsonBody);
-    var respuesta=json.decode(response.body);
-    if (respuesta["error"]=="true"){
-      return respuesta["respuesta"];
-    }
-    return Repartidor.fromJson(respuesta["respuesta"]);
-    }
-    catch(e){
-      return "Error de conexion de servidor";
-    }
-  }
+  
 }
