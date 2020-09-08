@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:izi_repartidores/model/OrdenesRepartidor.dart';
 import 'package:izi_repartidores/screens/pedidos/components/PedidosNuevos.dart';
-import 'package:izi_repartidores/screens/pedidos/components/PedidosRealizados.dart';
 import 'package:izi_repartidores/size_config.dart';
 
-class PedidosBuilder extends StatefulWidget {
+class SolicitudesBuilder extends StatefulWidget {
   final OrdenesRepartidor ordenes;
-  PedidosBuilder({Key key, this.ordenes}) : super(key: key);
-
+  SolicitudesBuilder({Key key, this.ordenes}) : super(key: key);
   @override
-  _PedidosBuilderState createState() => _PedidosBuilderState();
+  _SolicitudesBuilderState createState() => _SolicitudesBuilderState();
 }
 
-class _PedidosBuilderState extends State<PedidosBuilder> {
+class _SolicitudesBuilderState extends State<SolicitudesBuilder> {
   @override
   Widget build(BuildContext context) {
     return ListView(children: [
@@ -30,7 +28,7 @@ class _PedidosBuilderState extends State<PedidosBuilder> {
 
   Widget titulo() {
     return Text(
-      "Historial",
+      "Solicitudes de Entrega",
       style: TextStyle(
           color: Colors.black, fontSize: getProportionateScreenHeight(30)),
     );
@@ -38,9 +36,9 @@ class _PedidosBuilderState extends State<PedidosBuilder> {
 
   Widget ordenes() {
     return Column(children: [
-      PedidosRealizados(
-        ordenesRealizadas: widget.ordenes.ordenesRealizadas,
-      )
+      PedidosNuevos(
+        ordenesNuevas: widget.ordenes.ordenesConfirmar,
+      ),
     ]);
   }
 }

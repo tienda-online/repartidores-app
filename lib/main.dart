@@ -10,19 +10,21 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  final PedidosBloc blocPedidos = PedidosBloc();
   @override
   Widget build(BuildContext context) {
-    
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Izi Repartidores',
-      theme: ThemeData(
-        scaffoldBackgroundColor: kPrimaryColor,
-        primaryColor: kPrimaryColor,
-        fontFamily: "Roboto",
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-       home:  Login()
+    return BlocProvider<PedidosBloc>(
+      bloc: blocPedidos,
+      child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Izi Repartidores',
+          theme: ThemeData(
+            scaffoldBackgroundColor: kPrimaryColor,
+            primaryColor: kPrimaryColor,
+            fontFamily: "Roboto",
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
+          home: Login()),
     );
   }
 }

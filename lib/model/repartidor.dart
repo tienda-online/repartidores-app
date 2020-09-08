@@ -3,12 +3,12 @@ import 'package:json_annotation/json_annotation.dart';
 part 'repartidor.g.dart';
 
 @JsonSerializable()
-class Repartidor{
+class Repartidor {
   @JsonKey(name: 'id_repartidor')
   int codigoRepartidor;
   @JsonKey(name: 'nombre')
   String nombre;
-   @JsonKey(name: 'apellido')
+  @JsonKey(name: 'apellido')
   String apellido;
   @JsonKey(name: 'correo')
   String correo;
@@ -16,9 +16,18 @@ class Repartidor{
   String imagen;
   @JsonKey(name: 'telefono')
   String telefono;
-  Repartidor(this.codigoRepartidor, this.correo,this.nombre,this.imagen,this.telefono,this.apellido);
-  factory Repartidor.fromJson(Map<String, dynamic> json) => _$RepartidorFromJson(json);
+  @JsonKey(name: 'estado')
+  String estado;
+  Repartidor(
+      {this.codigoRepartidor,
+      this.correo,
+      this.nombre,
+      this.imagen,
+      this.telefono,
+      this.apellido,
+      this.estado});
+  factory Repartidor.fromJson(Map<String, dynamic> json) =>
+      _$RepartidorFromJson(json);
 
   Map<String, dynamic> toJson() => _$RepartidorToJson(this);
-
 }

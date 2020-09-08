@@ -69,7 +69,7 @@ class _PedidoComponentState extends State<PedidoComponent> {
           width: getProportionateScreenWidth(150),
           child: Center(child: Text("${widget.orden.sucursal.nombreAfiliado}",style: TextStyle(fontSize: getProportionateScreenHeight(20),color:Colors.black))))
       ],),
-      Icon(Icons.arrow_forward),
+      Icon(Icons.arrow_forward,size: getProportionateScreenHeight(20),),
       Column(
         children: [
         Text("Cliente",style: TextStyle(color: kSecondaryColor,fontSize: getProportionateScreenHeight(15)),),

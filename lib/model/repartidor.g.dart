@@ -8,12 +8,13 @@ part of 'repartidor.dart';
 
 Repartidor _$RepartidorFromJson(Map<String, dynamic> json) {
   return Repartidor(
-    json['id_repartidor'] as int,
-    json['correo'] as String,
-    json['nombre'] as String,
-    json['imagen'] as String,
-    json['telefono'] as String,
-    json['apellido'] as String,
+    codigoRepartidor: json['id_repartidor'] as int,
+    correo: json['correo'] as String,
+    nombre: json['nombre'] as String,
+    imagen: json['imagen'] as String,
+    telefono: json['telefono'] as String,
+    apellido: json['apellido'] as String,
+    estado: json['estado'] as String,
   );
 }
 
@@ -25,4 +26,5 @@ Map<String, dynamic> _$RepartidorToJson(Repartidor instance) =>
       'correo': instance.correo,
       'imagen': instance.imagen,
       'telefono': instance.telefono,
+      'estado': instance.estado,
     };

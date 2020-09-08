@@ -4,15 +4,14 @@ import 'package:izi_repartidores/components/loading.dart';
 import 'package:izi_repartidores/screens/pedidos/bloc/pedidos_bloc.dart';
 import 'package:izi_repartidores/screens/pedidos/bloc/pedidos_event.dart';
 import 'package:izi_repartidores/screens/pedidos/bloc/pedidos_state.dart';
-import 'package:izi_repartidores/screens/pedidos/components/PedidosBuilder.dart';
-import 'package:izi_repartidores/size_config.dart';
+import 'package:izi_repartidores/screens/solicitudes/components/SolicitudBuilder.dart';
 
-class PedidosPage extends StatefulWidget {
+class Solicitudes extends StatefulWidget {
   @override
-  _PedidosPageState createState() => _PedidosPageState();
+  _SolicitudesState createState() => _SolicitudesState();
 }
 
-class _PedidosPageState extends State<PedidosPage> {
+class _SolicitudesState extends State<Solicitudes> {
   @override
   Widget build(BuildContext context) {
     PedidosBloc blocPedidos = BlocProvider.of<PedidosBloc>(context);
@@ -25,7 +24,7 @@ class _PedidosPageState extends State<PedidosPage> {
           } else if (state is PedidosFailed) {
             return Center(child: Text(state.error));
           } else if (state is PedidosCompleted) {
-            return PedidosBuilder(
+            return SolicitudesBuilder(
               ordenes: state.ordenes,
             );
           }
