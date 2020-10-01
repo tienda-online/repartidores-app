@@ -14,6 +14,7 @@ Cliente _$ClienteFromJson(Map<String, dynamic> json) {
     codigoCliente: json['id_cliente'] as num,
     nombre: json['nombres'] as String,
     apellido: json['apellidos'] as String,
+    imagen: json['imagen'] as String,
   );
 }
 
@@ -22,4 +23,5 @@ Map<String, dynamic> _$ClienteToJson(Cliente instance) => <String, dynamic>{
       'id_cliente': instance.codigoCliente,
       'nombres': instance.nombre,
       'apellidos': instance.apellido,
+      'imagen': instance.imagen,
     };

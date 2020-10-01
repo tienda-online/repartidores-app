@@ -32,10 +32,11 @@ class _PedidoActualComponentState extends State<PedidoActualComponent> {
             },
                 controller: pageController,
                 children: [
-                  Mapa(ordenActual: widget.ordenActual,),
+                  //Mapa(ordenActual: widget.ordenActual,),
+                  Container(child: Text("hola"),),
                   ResumenPedido(orden: widget.ordenActual,),
                   Estado(),
-                  Chat()
+                  Chat(ordenActual: widget.ordenActual,)
                 ],
                 
               ),
@@ -60,7 +61,7 @@ class _PedidoActualComponentState extends State<PedidoActualComponent> {
         boton("Mapa", 0),
         boton("Resumen", 1),
         boton("Estado", 2),
-        boton("Repartidor", 3),
+        boton("Chat", 3),
         ]
       ),
     );

@@ -51,7 +51,7 @@ class _HomeState extends State<Home> {
       title: Text(
         titulos[page],
         style: TextStyle(
-            color: Colors.white, fontSize: getProportionateScreenHeight(20)),
+            color: Colors.white, fontSize: getProportionateScreenHeight(20),fontWeight: FontWeight.bold),
       ),
       elevation: 0,
       centerTitle: true,

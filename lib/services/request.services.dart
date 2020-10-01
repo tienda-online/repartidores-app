@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:izi_repartidores/constants.dart';
+import 'package:izi_repartidores/model/Mensaje.dart';
 import 'package:izi_repartidores/model/Respuesta.dart';
 import 'package:izi_repartidores/model/orden.dart';
 import 'package:izi_repartidores/model/repartidor.dart';
@@ -67,6 +68,32 @@ class RequestService {
     }catch (e){
       return Respuesta(error: "true",respuesta: "Error de conexion con el servidor");
     }
+  }
+
+  static Future<Respuesta> getMensajesOrden(int codigoOrden) async{
+    try{
+      Map<String,String> headers={"token":token};
+      var response= await get("${kapiUrl}/ordenes/${codigoOrden}/mensajes",headers: headers);
+      return Respuesta.fromJson(json.decode(response.body));
+    }catch (e){
+      return Respuesta(error: "true",respuesta: "Error de conexion con el servidor");
+    }
+  }
+
+  static Future<Respuesta> createMensaje(int codigoOrden,String mensaje) async{
+    try{
+       String jsonBody = '{"mensaje": "${mensaje}"}';
+      Map<String,String> headers={
+        "token":token,
+        'Content-Type': 'application/json; charset=UTF-8'
+      };
+      Map data={'mensaje':mensaje};
+      Response response= await post("${kapiUrl}/ordenes/${codigoOrden}/mensajes",body: jsonBody,headers: headers);
+      return Respuesta.fromJson(json.decode(response.body));
+    }catch(e){
+      return Respuesta(error: "true",respuesta: "Error de conexion con el servidor");
+    }
+    
   }
 
 }

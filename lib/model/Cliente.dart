@@ -13,8 +13,10 @@ class Cliente{
   String nombre;
   @JsonKey(name: "apellidos")
   String apellido;
+  @JsonKey(name: "imagen")
+  String imagen;
 
-  Cliente({this.direccion,this.codigoCliente,this.nombre,this.apellido});
+  Cliente({this.direccion,this.codigoCliente,this.nombre,this.apellido,this.imagen});
 
 
   factory Cliente.fromJson(Map<String, dynamic> json) => _$ClienteFromJson(json);

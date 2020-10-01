@@ -10,5 +10,5 @@ const kPrimaryGradientColor = LinearGradient(
 const kSecondaryColor = Color(0xFF979797);
 
 const kAnimationDuration = Duration(milliseconds: 200);
-const kapiUrl = "https://api.izi.ec/repartidores";
+const kapiUrl = "http://10.0.2.2:80/repartidores";
 var token = "";
