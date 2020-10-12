@@ -15,6 +15,7 @@ Repartidor _$RepartidorFromJson(Map<String, dynamic> json) {
     telefono: json['telefono'] as String,
     apellido: json['apellido'] as String,
     estado: json['estado'] as String,
+    inDescanso: json['in_descanso'] as String,
   );
 }
 
@@ -27,4 +28,5 @@ Map<String, dynamic> _$RepartidorToJson(Repartidor instance) =>
       'imagen': instance.imagen,
       'telefono': instance.telefono,
       'estado': instance.estado,
+      'in_descanso': instance.inDescanso,
     };

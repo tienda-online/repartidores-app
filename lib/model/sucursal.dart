@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'sucursal.g.dart';
 
 @JsonSerializable()
-class Sucursal{
+class Sucursal {
   @JsonKey(name: "direccion")
   String direccion;
   @JsonKey(name: "id_afiliado")
@@ -16,10 +16,20 @@ class Sucursal{
   String longitud;
   @JsonKey(name: "nombre_afiliado")
   String nombreAfiliado;
+  @JsonKey(name: "imagen")
+  String imagen;
 
-  Sucursal({this.direccion,this.codigoAfiliado,this.referencia,this.latitud,this.longitud,this.nombreAfiliado});
+  Sucursal(
+      {this.direccion,
+      this.codigoAfiliado,
+      this.referencia,
+      this.latitud,
+      this.longitud,
+      this.nombreAfiliado,
+      this.imagen});
 
-  factory Sucursal.fromJson(Map<String, dynamic> json) => _$SucursalFromJson(json);
+  factory Sucursal.fromJson(Map<String, dynamic> json) =>
+      _$SucursalFromJson(json);
 
   Map<String, dynamic> toJson() => _$SucursalToJson(this);
 }

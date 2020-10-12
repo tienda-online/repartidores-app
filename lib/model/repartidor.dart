@@ -18,6 +18,8 @@ class Repartidor {
   String telefono;
   @JsonKey(name: 'estado')
   String estado;
+  @JsonKey(name: "in_descanso")
+  String inDescanso;
   Repartidor(
       {this.codigoRepartidor,
       this.correo,
@@ -25,7 +27,8 @@ class Repartidor {
       this.imagen,
       this.telefono,
       this.apellido,
-      this.estado});
+      this.estado,
+      this.inDescanso});
   factory Repartidor.fromJson(Map<String, dynamic> json) =>
       _$RepartidorFromJson(json);
 

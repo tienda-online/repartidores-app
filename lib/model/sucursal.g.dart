@@ -14,6 +14,7 @@ Sucursal _$SucursalFromJson(Map<String, dynamic> json) {
     latitud: json['lat'] as String,
     longitud: json['lng'] as String,
     nombreAfiliado: json['nombre_afiliado'] as String,
+    imagen: json['imagen'] as String,
   );
 }
 
@@ -24,4 +25,5 @@ Map<String, dynamic> _$SucursalToJson(Sucursal instance) => <String, dynamic>{
       'lat': instance.latitud,
       'lng': instance.longitud,
       'nombre_afiliado': instance.nombreAfiliado,
+      'imagen': instance.imagen,
     };

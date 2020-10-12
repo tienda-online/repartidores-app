@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:izi_repartidores/constants.dart';
 import 'package:izi_repartidores/model/repartidor.dart';
 import 'package:izi_repartidores/screens/pedidoActual/pedidoActual.dart';
 import 'package:izi_repartidores/screens/pedidos/pedidos.dart';
@@ -17,19 +18,13 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int page = 0;
-  List<String> titulos = [
-    "Perfil",
-    "Historial",
-    "Solicitudes",
-    "Pedido Actual"
-  ];
+  List<String> titulos = ["Perfil", "Historial", "Solicitudes"];
   @override
   Widget build(BuildContext context) {
     List<Widget> screens = [
       Perfil(repartidor: widget.repartidor),
       PedidosPage(),
-      Solicitudes(),
-      PedidoActualPage()
+      Solicitudes()
     ];
     return Scaffold(
       resizeToAvoidBottomPadding: false,
@@ -43,6 +38,16 @@ class _HomeState extends State<Home> {
               color: Colors.white),
           child: screens[page]),
       bottomNavigationBar: buildNavBar(),
+      floatingActionButton: FloatingActionButton(
+        heroTag: "verOrdenActual",
+        onPressed: () {
+          MaterialPageRoute route =
+              MaterialPageRoute(builder: (_) => PedidoActualPage());
+          Navigator.push(context, route);
+        },
+        child: Icon(Icons.article),
+        backgroundColor: kPrimaryColor,
+      ),
     );
   }
 
@@ -51,7 +56,9 @@ class _HomeState extends State<Home> {
       title: Text(
         titulos[page],
         style: TextStyle(
-            color: Colors.white, fontSize: getProportionateScreenHeight(20),fontWeight: FontWeight.bold),
+            color: Colors.white,
+            fontSize: getProportionateScreenHeight(20),
+            fontWeight: FontWeight.bold),
       ),
       elevation: 0,
       centerTitle: true,
@@ -63,13 +70,11 @@ class _HomeState extends State<Home> {
       type: BottomNavigationBarType.fixed,
       currentIndex: page,
       items: [
-        BottomNavigationBarItem(icon: Icon(Icons.home), title: Text("Perfil")),
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: "Perfil"),
         BottomNavigationBarItem(
-            icon: Icon(Icons.assessment), title: Text("Historial")),
+            icon: Icon(Icons.assessment), label: "Historial"),
         BottomNavigationBarItem(
-            icon: Icon(Icons.drive_eta_outlined), title: Text("Solicitudes")),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.bike_scooter), title: Text("Pedido Actual")),
+            icon: Icon(Icons.drive_eta_outlined), label: "Solicitudes")
       ],
       onTap: (index) {
         setState(() {

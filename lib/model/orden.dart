@@ -30,7 +30,7 @@ class Orden {
   String fechaCreacion;
   @JsonKey(name: "estado")
   String estado;
-  @JsonKey(name: "trackings")
+  @JsonKey(name: "tracking")
   List<Tracking> trackings;
 
   Orden(

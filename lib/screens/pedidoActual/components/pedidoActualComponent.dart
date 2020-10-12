@@ -3,48 +3,47 @@ import 'package:izi_repartidores/constants.dart';
 import 'package:izi_repartidores/model/orden.dart';
 import 'package:izi_repartidores/screens/pedidoActual/components/views/chat.dart';
 import 'package:izi_repartidores/screens/pedidoActual/components/views/estado.dart';
+import 'package:izi_repartidores/screens/pedidoActual/components/views/mapa/mapa.dart';
 import 'package:izi_repartidores/screens/pedidoActual/components/views/resumen/resumen.dart';
 import 'package:izi_repartidores/size_config.dart';
 
 class PedidoActualComponent extends StatefulWidget {
   final Orden ordenActual;
-  PedidoActualComponent({Key key, this.ordenActual}) : super(key: key);
+  final String estado;
+  PedidoActualComponent({Key key, this.ordenActual, this.estado})
+      : super(key: key);
   @override
   _PedidoActualComponentState createState() => _PedidoActualComponentState();
 }
 
 class _PedidoActualComponentState extends State<PedidoActualComponent> {
-  PageController pageController = PageController(initialPage: 0);
   int pageNumber = 0;
+  List<Widget> widgets = [];
+  @override
+  void initState() {
+    widgets = [
+      Mapa(
+        ordenActual: widget.ordenActual,
+        estado: widget.estado,
+      ),
+      ResumenPedido(
+        orden: widget.ordenActual,
+      ),
+      Estado(trackings: widget.ordenActual.trackings),
+      Chat(
+        ordenActual: widget.ordenActual,
+      )
+    ];
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Flexible(
           flex: 12,
-          child: Container(
-            child: PageView(
-              onPageChanged: (index) {
-                setState(() {
-                  pageNumber = index;
-                });
-              },
-              controller: pageController,
-              children: [
-                //Mapa(ordenActual: widget.ordenActual,),
-                Container(
-                  child: Text("hola"),
-                ),
-                ResumenPedido(
-                  orden: widget.ordenActual,
-                ),
-                Estado(trackings: widget.ordenActual.trackings),
-                Chat(
-                  ordenActual: widget.ordenActual,
-                )
-              ],
-            ),
-          ),
+          child: Container(child: widgets[pageNumber]),
         ),
         Flexible(flex: 1, child: bottomBarActual())
       ],
@@ -67,13 +66,14 @@ class _PedidoActualComponentState extends State<PedidoActualComponent> {
   GestureDetector boton(String text, int numero) {
     Color colorFondo = Colors.white;
     Color colorTexto = kPrimaryColor;
+    Color colorBorder = kPrimaryColor;
     if (numero == pageNumber) {
       colorFondo = kPrimaryColor;
       colorTexto = Colors.white;
+      colorBorder = Colors.white;
     }
     return GestureDetector(
       onTap: () {
-        pageController.jumpToPage(numero);
         setState(() {
           pageNumber = numero;
         });
@@ -85,7 +85,7 @@ class _PedidoActualComponentState extends State<PedidoActualComponent> {
           decoration: BoxDecoration(
               color: colorFondo,
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: kPrimaryColor, width: 2)),
+              border: Border.all(color: colorBorder, width: 2)),
           child: Center(
               child: Text(
             text,

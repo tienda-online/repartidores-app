@@ -46,7 +46,7 @@ class _ChatState extends State<Chat> {
                 _titulo(),
                 Flexible(
                   fit: FlexFit.tight,
-                  flex: 7,
+                  flex: 6,
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.grey[300],

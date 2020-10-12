@@ -25,7 +25,12 @@ Orden _$OrdenFromJson(Map<String, dynamic> json) {
         ?.toList(),
     fechaCreacion: json['fecha_creacion'] as String,
     estado: json['estado'] as String,
-  )..envio = (json['envio'] as num)?.toDouble();
+  )
+    ..envio = (json['envio'] as num)?.toDouble()
+    ..trackings = (json['tracking'] as List)
+        ?.map((e) =>
+            e == null ? null : Tracking.fromJson(e as Map<String, dynamic>))
+        ?.toList();
 }
 
 Map<String, dynamic> _$OrdenToJson(Orden instance) => <String, dynamic>{
@@ -40,4 +45,5 @@ Map<String, dynamic> _$OrdenToJson(Orden instance) => <String, dynamic>{
       'productos': instance.productos?.map((e) => e?.toJson())?.toList(),
       'fecha_creacion': instance.fechaCreacion,
       'estado': instance.estado,
+      'tracking': instance.trackings?.map((e) => e?.toJson())?.toList(),
     };

@@ -3,10 +3,8 @@ import 'package:izi_repartidores/components/circular_image.dart';
 import 'package:izi_repartidores/constants.dart';
 import 'package:izi_repartidores/model/repartidor.dart';
 import 'package:izi_repartidores/screens/login/login.dart';
+import 'package:izi_repartidores/services/request.services.dart';
 import 'package:izi_repartidores/size_config.dart';
-import 'package:izi_repartidores/size_config.dart';
-import 'package:izi_repartidores/constants.dart';
-import 'package:izi_repartidores/constants.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class Perfil extends StatefulWidget {
@@ -52,10 +50,14 @@ class _PerfilState extends State<Perfil> {
           url: widget.repartidor.imagen,
         ),
         SizedBox(
-          height: getProportionateScreenHeight(30),
+          height: getProportionateScreenHeight(10),
         ),
-        starsRating(4),
+        starsRating(5),
+        descansoButton(),
         buildInfo(),
+        SizedBox(
+          height: getProportionateScreenHeight(20),
+        ),
         cerrarSesion()
       ],
     );
@@ -73,30 +75,66 @@ class _PerfilState extends State<Perfil> {
     );
   }
 
+  Widget descansoButton() {
+    bool descanso = false;
+    if (widget.repartidor.inDescanso == "1") {
+      descanso = true;
+    }
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text("Modo descanso"),
+        Switch(
+          value: descanso,
+          onChanged: (value) {
+            setState(() {
+              if (value) {
+                widget.repartidor.inDescanso = "1";
+              } else {
+                widget.repartidor.inDescanso = "0";
+              }
+              RequestService.actualizarModoDescanso(
+                  widget.repartidor.inDescanso,
+                  widget.repartidor.codigoRepartidor);
+            });
+          },
+          activeTrackColor: kPrimaryColor,
+          activeColor: Colors.white,
+        ),
+      ],
+    );
+  }
+
   Widget buildInfo() {
     return Container(
-      height: SizeConfig.screenHeight * 0.2,
+      height: SizeConfig.screenHeight * 0.25,
       margin: EdgeInsets.symmetric(
-          vertical: getProportionateScreenHeight(60),
+          vertical: getProportionateScreenHeight(10),
           horizontal: getProportionateScreenWidth(40)),
       decoration: BoxDecoration(
+          color: Colors.white,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: kPrimaryColor, width: 2)),
+          boxShadow: [BoxShadow(color: Colors.grey[500], blurRadius: 5)]),
       child: Center(
-        child: Text("Informacion Relevante"),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("Informacion Relevante"),
+          ],
+        ),
       ),
     );
   }
 }
 
 Widget starsRating(double rating) {
-  return Row(
+  return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       SmoothStarRating(
           starCount: 5,
           rating: rating,
-          size: 20.0,
+          size: getProportionateScreenHeight(50),
           isReadOnly: true,
           color: kPrimaryColor,
           defaultIconData: Icons.star_border,
