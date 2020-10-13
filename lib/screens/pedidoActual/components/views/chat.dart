@@ -21,14 +21,22 @@ class Chat extends StatefulWidget {
 }
 
 class _ChatState extends State<Chat> {
+  Timer _timer;
   TextEditingController mensajeController = TextEditingController();
   List<Mensaje> mensajes = [];
 
   @override
   void initState() {
+    _timer = Timer.periodic(Duration(seconds: 3), getMensajes);
     this.getMensajesNow();
-    Timer.periodic(Duration(seconds: 3), getMensajes);
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 
   @override

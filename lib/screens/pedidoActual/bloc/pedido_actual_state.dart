@@ -18,3 +18,8 @@ class PedidoActualCompleted extends PedidoActualState {
   final String estado;
   PedidoActualCompleted(this.orden, this.estado) : super([orden, estado]);
 }
+
+class PedidoActualTerminado extends PedidoActualState {
+  final Orden orden;
+  PedidoActualTerminado(this.orden) : super([orden]);
+}

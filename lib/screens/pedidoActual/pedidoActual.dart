@@ -5,6 +5,7 @@ import 'package:izi_repartidores/constants.dart';
 import 'package:izi_repartidores/screens/pedidoActual/bloc/pedido_actual_bloc.dart';
 import 'package:izi_repartidores/screens/pedidoActual/bloc/pedido_actual_event.dart';
 import 'package:izi_repartidores/screens/pedidoActual/bloc/pedido_actual_state.dart';
+import 'package:izi_repartidores/screens/pedidoActual/components/PedidoTerminado.dart';
 import 'package:izi_repartidores/screens/pedidoActual/components/pedidoActualComponent.dart';
 import 'package:izi_repartidores/size_config.dart';
 
@@ -49,6 +50,10 @@ class _PedidoActualPageState extends State<PedidoActualPage> {
                 return PedidoActualComponent(
                   ordenActual: state.orden,
                   estado: state.estado,
+                );
+              } else if (state is PedidoActualTerminado) {
+                return PedidoTerminado(
+                  orden: state.orden,
                 );
               }
             }),

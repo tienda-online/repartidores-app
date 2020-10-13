@@ -128,4 +128,19 @@ class RequestService {
           error: "true", respuesta: "Error de conexion con el servidor");
     }
   }
+
+  static Future<Respuesta> terminarPedido(num codigoOrden) async {
+    Map<String, String> headers = {
+      "token": token,
+      'Content-Type': 'application/json; charset=UTF-8'
+    };
+    try {
+      Response response =
+          await put("$kapiUrl/ordenes/$codigoOrden/terminar", headers: headers);
+      return Respuesta.fromJson(json.decode(response.body));
+    } catch (e) {
+      return Respuesta(
+          error: "true", respuesta: "Error de conexion con el servidor");
+    }
+  }
 }

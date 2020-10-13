@@ -35,31 +35,31 @@ class FooterActual extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.0),
               child: FlatButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                        getProportionateScreenHeight(10))),
-                color: Colors.green,
-                padding: EdgeInsets.zero,
-                child: Text(
-                  buttonText,
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () async {
-                  if (estado == "Recogiendo pedido") {
-                    Respuesta respuesta = await RequestService.recogerPedido(
-                        ordenActual.codigoOrden);
-                    if (respuesta.error == "true") {
-                      ShowMessage.showErrorDialog(
-                          context, "Error", respuesta.respuesta);
-                    } else {
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                          getProportionateScreenHeight(10))),
+                  color: Colors.green,
+                  padding: EdgeInsets.zero,
+                  child: Text(
+                    buttonText,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () async {
+                    if (estado == "Recogiendo pedido") {
+                      Respuesta respuesta = await RequestService.recogerPedido(
+                          ordenActual.codigoOrden);
+                      if (respuesta.error == "true") {
+                        ShowMessage.showErrorDialog(
+                            context, "Error", respuesta.respuesta);
+                      } else {
+                        BlocProvider.of<PedidoActualBloc>(context)
+                            .dispatch(GetPedidoActual());
+                      }
+                    } else if (estado == "Entregando pedido") {
                       BlocProvider.of<PedidoActualBloc>(context)
-                          .dispatch(GetPedidoActual());
+                          .dispatch(FinalizarPedidoActual(this.ordenActual));
                     }
-                  } else if (estado == "Entregando pedido") {
-                    // Funcion de terminar oden
-                  }
-                },
-              ),
+                  }),
             ),
           )
         ],

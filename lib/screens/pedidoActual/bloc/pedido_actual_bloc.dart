@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:izi_repartidores/constants.dart';
+import 'package:izi_repartidores/model/Respuesta.dart';
 import 'package:izi_repartidores/model/orden.dart';
 import 'package:izi_repartidores/screens/pedidoActual/bloc/pedido_actual_event.dart';
 import 'package:izi_repartidores/screens/pedidoActual/bloc/pedido_actual_state.dart';
@@ -27,9 +28,21 @@ class PedidoActualBloc extends Bloc<PedidoActualEvent, PedidoActualState> {
         Orden ordenActual = pedido;
         if (ordenActual.estado == "OPRC" || ordenActual.estado == "OLRC") {
           yield PedidoActualCompleted(pedido, "Recogiendo pedido");
+        } else if (ordenActual.estado == "T") {
+          yield PedidoActualTerminado(pedido);
         } else {
           yield PedidoActualCompleted(pedido, "Entregando pedido");
         }
+      }
+    }
+    if (event is FinalizarPedidoActual) {
+      yield PedidoActualLoading();
+      Respuesta respuesta =
+          await RequestService.terminarPedido(event.orden.codigoOrden);
+      if (respuesta.error == "true") {
+        yield PedidoActualFailed(respuesta.respuesta);
+      } else {
+        yield PedidoActualTerminado(event.orden);
       }
     }
   }
