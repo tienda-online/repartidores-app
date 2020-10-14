@@ -27,7 +27,22 @@ class _ChatState extends State<Chat> {
 
   @override
   void initState() {
-    _timer = Timer.periodic(Duration(seconds: 3), getMensajes);
+    _timer = Timer.periodic(Duration(seconds: 3), (timer) async {
+      Respuesta respuesta =
+          await RequestService.getMensajesOrden(widget.ordenActual.codigoOrden);
+      if (respuesta.error == "true") {
+        return;
+      } else {
+        List<Mensaje> mensajes = [];
+        for (var menJson in respuesta.respuesta["mensajes"]) {
+          Mensaje mensaje = Mensaje.fromJson(menJson);
+          mensajes.add(mensaje);
+        }
+        setState(() {
+          this.mensajes = mensajes;
+        });
+      }
+    });
     this.getMensajesNow();
 
     super.initState();
@@ -43,10 +58,10 @@ class _ChatState extends State<Chat> {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: EdgeInsets.only(top: getProportionateScreenHeight(20)),
+        padding: EdgeInsets.only(top: getProportionateScreenHeight(50)),
         child: Container(
             width: getProportionateScreenWidth(340),
-            height: getProportionateScreenHeight(600),
+            height: getProportionateScreenHeight(650),
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
             child: Column(
@@ -157,23 +172,6 @@ class _ChatState extends State<Chat> {
                 ],
               ),
             )));
-  }
-
-  void getMensajes(Timer timer) async {
-    Respuesta respuesta =
-        await RequestService.getMensajesOrden(widget.ordenActual.codigoOrden);
-    if (respuesta.error == "true") {
-      return;
-    } else {
-      List<Mensaje> mensajes = [];
-      for (var menJson in respuesta.respuesta) {
-        Mensaje mensaje = Mensaje.fromJson(menJson);
-        mensajes.add(mensaje);
-      }
-      setState(() {
-        this.mensajes = mensajes;
-      });
-    }
   }
 
   void getMensajesNow() async {

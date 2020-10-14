@@ -9,7 +9,7 @@ import 'package:izi_repartidores/constants.dart';
 import 'package:izi_repartidores/model/orden.dart';
 import 'package:izi_repartidores/screens/pedidoActual/components/views/mapa/FooterActual.dart';
 import 'package:izi_repartidores/size_config.dart';
-import 'package:location/location.dart';
+import 'package:geolocator/geolocator.dart';
 
 class Mapa extends StatefulWidget {
   Orden ordenActual;
@@ -24,8 +24,7 @@ class Mapa extends StatefulWidget {
 class _MapState extends State<Mapa> {
   String _mapStyle;
   GoogleMapController mapController;
-  Location _locationTracker = Location();
-  StreamSubscription _locationSubscription;
+  StreamSubscription<Position> _locationSubscription;
   Set<Marker> markers = {};
   Marker marker;
   Polyline polyline;
@@ -128,7 +127,7 @@ class _MapState extends State<Mapa> {
     );
   }
 
-  void updateMarkerAndCircle(LocationData newLocalData, Uint8List imageData) {
+  void updateMarkerAndCircle(Position newLocalData, Uint8List imageData) {
     LatLng latlng = LatLng(newLocalData.latitude, newLocalData.longitude);
     this.setState(() {
       markers.remove(marker);
@@ -148,7 +147,8 @@ class _MapState extends State<Mapa> {
   void getCurrentLocation() async {
     try {
       Uint8List imageData = await getMarker();
-      var location = await _locationTracker.getLocation();
+      var location = await getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.bestForNavigation);
 
       updateMarkerAndCircle(location, imageData);
       if (widget.estado == "Recogiendo pedido") {
@@ -160,8 +160,9 @@ class _MapState extends State<Mapa> {
       if (_locationSubscription != null) {
         _locationSubscription.cancel();
       }
-      _locationSubscription =
-          _locationTracker.onLocationChanged.listen((newLocalData) async {
+      _locationSubscription = _locationSubscription =
+          getPositionStream(desiredAccuracy: LocationAccuracy.bestForNavigation)
+              .listen((newLocalData) async {
         if (mapController != null) {
           double zoom = await mapController.getZoomLevel();
           mapController.animateCamera(CameraUpdate.newCameraPosition(
@@ -186,7 +187,7 @@ class _MapState extends State<Mapa> {
     return byteData.buffer.asUint8List();
   }
 
-  Future<void> getRuta(LocationData ubicacion, LatLng destino) async {
+  Future<void> getRuta(Position ubicacion, LatLng destino) async {
     List<LatLng> puntos = await googleMapPolyline.getCoordinatesWithLocation(
         origin: LatLng(ubicacion.latitude, ubicacion.longitude),
         destination: destino,
