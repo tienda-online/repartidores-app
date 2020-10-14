@@ -107,7 +107,7 @@ class _PerfilState extends State<Perfil> {
 
   Widget buildInfo() {
     return Container(
-      height: SizeConfig.screenHeight * 0.25,
+      height: SizeConfig.screenHeight * 0.20,
       margin: EdgeInsets.symmetric(
           vertical: getProportionateScreenHeight(10),
           horizontal: getProportionateScreenWidth(40)),

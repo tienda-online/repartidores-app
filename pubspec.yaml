@@ -34,8 +34,10 @@ dependencies:
   json_annotation: ^3.0.1
   smooth_star_rating: 1.1.1
   google_maps_flutter: ^0.5.5
-  location: ^3.0.0
+  geolocator: ^6.0.0
   google_map_polyline:
+  background_location: ^0.2.1
+  shared_preferences: ^0.5.12
 
 dev_dependencies:
   build_runner: ^1.10.2

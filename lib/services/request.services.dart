@@ -1,11 +1,13 @@
 import 'dart:convert';
 
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart';
 import 'package:izi_repartidores/constants.dart';
 import 'package:izi_repartidores/model/Mensaje.dart';
 import 'package:izi_repartidores/model/Respuesta.dart';
 import 'package:izi_repartidores/model/orden.dart';
 import 'package:izi_repartidores/model/repartidor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RequestService {
   static Future<dynamic> fetchLogin(String usuario, String contrasena) async {
@@ -18,6 +20,8 @@ class RequestService {
         return respuesta["respuesta"];
       }
       token = response.headers["token"];
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      pref.setString("token_auth", token);
       return Repartidor.fromJson(respuesta["respuesta"]);
     } catch (e) {
       return "Error de conexion de servidor";
@@ -142,5 +146,19 @@ class RequestService {
       return Respuesta(
           error: "true", respuesta: "Error de conexion con el servidor");
     }
+  }
+
+  static void actualizarUbicacion(double latitud, double longitud) async {
+    String jsonBody = '{"latitud": ${latitud},"longitud":${longitud}}';
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    var tokenAuth = pref.getString("token_auth");
+    Map<String, String> headers = {
+      "token": tokenAuth,
+      'Content-Type': 'application/json; charset=UTF-8'
+    };
+    Response response =
+        await put("$kapiUrl/ubicacion", headers: headers, body: jsonBody);
+    var respuesta = Respuesta.fromJson(json.decode(response.body));
+    print(respuesta.respuesta);
   }
 }
