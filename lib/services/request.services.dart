@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart';
@@ -7,13 +8,27 @@ import 'package:izi_repartidores/model/Mensaje.dart';
 import 'package:izi_repartidores/model/Respuesta.dart';
 import 'package:izi_repartidores/model/orden.dart';
 import 'package:izi_repartidores/model/repartidor.dart';
+import 'package:onesignal/onesignal.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RequestService {
   static Future<dynamic> fetchLogin(String usuario, String contrasena) async {
     try {
+      if (Platform.isAndroid) {
+        OneSignal.shared.init("9975151b-07df-4e4c-8763-3e90e5eccace");
+      } else {
+        OneSignal.shared.init("9975151b-07df-4e4c-8763-3e90e5eccace",
+            iOSSettings: {
+              OSiOSSettings.autoPrompt: false,
+              OSiOSSettings.inAppLaunchUrl: true
+            });
+      }
+      var subscription =
+          await OneSignal.shared.getPermissionSubscriptionState();
+      String notificationToken = subscription.subscriptionStatus.userId;
+
       String jsonBody =
-          '{"correo": "${usuario}", "contrasena": "${contrasena}"}';
+          '{"correo": "$usuario", "contrasena": "$contrasena","token_notificacion":"$notificationToken"}';
       Response response = await put(kapiUrl + "/login", body: jsonBody);
       var respuesta = json.decode(response.body);
       if (respuesta["error"] == "true") {

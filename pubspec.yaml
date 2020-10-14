@@ -35,13 +35,11 @@ dependencies:
   smooth_star_rating: 1.1.1
   google_maps_flutter: ^0.5.5
   geolocator: ^6.0.0
-  google_map_polyline:
-<<<<<<< HEAD
   onesignal: ^1.1.0
-=======
   background_location: ^0.2.1
   shared_preferences: ^0.5.12
->>>>>>> c86565af27d71b3791e4708cac98067e9779cc54
+  google_map_polyline:
+  
 
 dev_dependencies:
   build_runner: ^1.10.2
