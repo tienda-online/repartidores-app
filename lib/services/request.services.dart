@@ -171,9 +171,6 @@ class RequestService {
       "token": tokenAuth,
       'Content-Type': 'application/json; charset=UTF-8'
     };
-    Response response =
-        await put("$kapiUrl/ubicacion", headers: headers, body: jsonBody);
-    var respuesta = Respuesta.fromJson(json.decode(response.body));
-    print(respuesta.respuesta);
+    await put("$kapiUrl/ubicacion", headers: headers, body: jsonBody);
   }
 }

@@ -87,27 +87,24 @@ class _ChatState extends State<Chat> {
                             },
                           ),
                         ),
-                        Flexible(
-                          flex: 2,
-                          child: Container(
-                            child: FormInput(
-                              controller: mensajeController,
-                              hintText: "Ingrese mensaje",
-                              isContrasena: false,
-                              onSubmit: (string) async {
-                                Respuesta respuesta =
-                                    await RequestService.createMensaje(
-                                        widget.ordenActual.codigoOrden,
-                                        mensajeController.text);
-                                if (respuesta.error == "true") {
-                                  ShowMessage.showErrorDialog(
-                                      context, "Error", respuesta.respuesta);
-                                } else {
-                                  this.getMensajesNow();
-                                  mensajeController.clear();
-                                }
-                              },
-                            ),
+                        Container(
+                          child: FormInput(
+                            controller: mensajeController,
+                            hintText: "Ingrese mensaje",
+                            isContrasena: false,
+                            onSubmit: (string) async {
+                              Respuesta respuesta =
+                                  await RequestService.createMensaje(
+                                      widget.ordenActual.codigoOrden,
+                                      mensajeController.text);
+                              if (respuesta.error == "true") {
+                                ShowMessage.showErrorDialog(
+                                    context, "Error", respuesta.respuesta);
+                              } else {
+                                this.getMensajesNow();
+                                mensajeController.clear();
+                              }
+                            },
                           ),
                         )
                       ],
