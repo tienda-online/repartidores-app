@@ -164,13 +164,6 @@ class _MapState extends State<Mapa> {
           getPositionStream(desiredAccuracy: LocationAccuracy.bestForNavigation)
               .listen((newLocalData) async {
         if (mapController != null) {
-          double zoom = await mapController.getZoomLevel();
-          mapController.animateCamera(CameraUpdate.newCameraPosition(
-              new CameraPosition(
-                  bearing: 192.8334901395799,
-                  target: LatLng(newLocalData.latitude, newLocalData.longitude),
-                  tilt: newLocalData.heading,
-                  zoom: zoom)));
           updateMarkerAndCircle(newLocalData, imageData);
         }
       });
